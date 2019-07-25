@@ -13,7 +13,16 @@ sys.maxsize
 -sys.maxsize - 1
 ```
 
+### Array
 
+- 深度拷贝
+
+```python
+Combination = [1]
+Results = []
+# 这样combination 变了 append的东西不会变 这是我们想要的 记住 重要
+Results.append(combination[:])
+```
 
 ### Dict
 
