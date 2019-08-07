@@ -13,6 +13,27 @@ sys.maxsize
 -sys.maxsize - 1
 ```
 
+* import
+
+```python
+from colllections import deque
+```
+
+
+
+### Loop
+
+* for loop
+
+```python
+# 只计数 不需要知道每项
+for _ in range(size):
+```
+
+
+
+
+
 ### Array
 
 - 深度拷贝
@@ -113,14 +134,21 @@ a.reverse()
 a[::-1]
 ```
 
+
+
+
+
 ### 队列
 
 * deque 双端队列
 
 ```python
+# how to initize
 q = collections.deque()
+q = collections.deque([root]) # 特别注意: [] 不然报错无法iterate
+size = len(q)
 q.append(x)
-q.popleft()
+q.popleft() # 一定是popleft deque其实是double-end queue
 ```
 
 ### 集合
