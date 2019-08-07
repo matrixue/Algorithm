@@ -19,6 +19,19 @@ sys.maxsize
 from colllections import deque
 ```
 
+* 判断null
+
+```python
+# 没有null这个keyword
+if a is None:
+  ...
+# or
+if a:
+  ...
+```
+
+
+
 
 
 ### Loop
