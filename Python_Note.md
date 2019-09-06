@@ -47,17 +47,6 @@ for _ in range(size):
 
 
 
-### Array
-
-- 深度拷贝
-
-```python
-Combination = [1]
-Results = []
-# 这样combination 变了 append的东西不会变 这是我们想要的 记住 重要
-Results.append(combination[:])
-```
-
 ### Dict
 
 * 判断在不在dict里
@@ -145,6 +134,15 @@ sorted(nums) # return a copy sorted array
 a.reverse() 
 #或
 a[::-1]
+```
+
+* 深度拷贝
+
+```python
+Combination = [1]
+Results = []
+# 这样combination 变了 append的东西不会变 这是我们想要的 记住 重要
+Results.append(combination[:])
 ```
 
 
