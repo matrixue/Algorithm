@@ -1,16 +1,6 @@
 ### general
 
-##### BFS 使用场景
 
-* 最短路径
-* 分层遍历
-* 拓扑排序
-
-##### DFS 使用场景
-
-* permutation(排列)
-* combination(组合)
-* 所有方案
 
 ### Data Structure
 
