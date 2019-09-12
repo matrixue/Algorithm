@@ -1,15 +1,27 @@
 ### general
 
+##### BFS 使用场景
 
+* 最短路径
+* 分层遍历
+* 拓扑排序
 
+##### DFS 使用场景
 
+* permutation(排列)
+* combination(组合)
+* 所有方案
 
 ### Data Structure
 
 ##### ArrayList(list)
 
 ```java
+// declaration
 List<Integer> list = new ArrayList<>();
+//
+list.add(x);
+list.get(index);
 ```
 
 ```java
@@ -32,12 +44,12 @@ Deque<Integer> stack = new ArrayDeque<>();
 // implement a stack with linked list
 ```
 
-
-
 ##### LinkedList(Queue)
 
 ```java
 Queue<Integer> q = new LinkedList<>();
+q.offer(x);
+q.poll();
 ```
 
 ```java
