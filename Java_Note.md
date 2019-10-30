@@ -40,6 +40,9 @@ int[][] arr = new int[][] {
   {1, 0},
   {0, 1},
 }
+
+// methods
+Arrays.asList(array);
 ```
 
 ##### random number
@@ -119,6 +122,10 @@ q.poll();
 Queue<ListNode> heap = new PriorityQueue<>(size, ListNodeComparator);
 // 每次poll 最大
 PriorityQueue<Integer> end = new PriorityQueue<>(100, Collections.reverseOrder());
+
+// methods
+pq.poll();
+pq.add();
 
 // how to write a comparator
 private Comparator<ListNode> ListNodeComparator = new Comparator<ListNode>() {
