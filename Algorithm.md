@@ -328,6 +328,30 @@ class Solution {
 
 ___
 
+##### Word search II
+
+- 出处
+
+  https://leetcode.com/problems/word-search-ii/submissions/
+
+  输入是二维char board 和 待检测的word数组
+
+  输出那些可以找到 上下左右找 同一个char不能使用两次（在一个单词里面）
+
+- Solution
+
+  DFS
+
+  注意 （1）dfs时要记录已经用过的char （2）再判断完最后一个char就输出 不要等到再进dfs一次利用cur == length 判断（因为board只有一个char时 想再进dfs都不valid）
+
+- Complexity 
+
+  Time: O()
+
+  Space: O()
+
+- Code
+
 ##### Word break
 
 * 出处
