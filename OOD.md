@@ -28,6 +28,10 @@
 
 ##### *Good Practice
 
+* 继承 vs interface
+  * 一个class只能继承一个class（父亲）
+  * Interface：如果一个class想implement这个interface 它必须实现所有的函数，class可以implement很多interface
+
 #####  *Design Pattern
 
 ### S.O.L.I.D.
@@ -58,14 +62,16 @@
 
 跟面试官沟通 去除歧义
 
+主要是 **what** 和 **how** 偶尔会有who 和 when
+
 ##### Core Object
 
 确定涉及的类 类与类的关系
 
-| Class Name |
-| ---------- |
-| Attributes |
-| Functions  |
+| Class Name            |
+| --------------------- |
+| Attributes            |
+| Functions(operation ) |
 
 "-" 表示private
 
@@ -86,6 +92,10 @@
 检查自己的设计 是否满足关键点
 
 
+
+### 管理类
+
+* 把自己想成物体 比如一个停车场 不要以一个车一个司机的角度去想 以一个停车场的角度去想 去想输入输出
 
  ### 例题
 

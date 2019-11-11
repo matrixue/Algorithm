@@ -41,8 +41,13 @@ int[][] arr = new int[][] {
   {0, 1},
 }
 
-// methods
+// List <-> Array
 Arrays.asList(array);
+int[] arr = list.toArray();
+int[] arr = set.toArray();
+
+// methods
+int[] newArr = arr.clone();
 ```
 
 ##### random number
@@ -125,7 +130,8 @@ PriorityQueue<Integer> end = new PriorityQueue<>(100, Collections.reverseOrder()
 
 // methods
 pq.poll();
-pq.add();
+pq.add(2); //或
+pq.offer(2);
 
 // how to write a comparator
 private Comparator<ListNode> ListNodeComparator = new Comparator<ListNode>() {
@@ -170,6 +176,10 @@ s.iterator().next()
 Map<Integer, Integer> map = new HashMap<>();
 map.put(1, 2);
 map.get(1);
+
+// methods
+// 得到最大value
+int max = Collections.max(map.values());
 ```
 
 

@@ -4,6 +4,25 @@
 
 ### Non算法
 
+##### sort a almost sorted list by swap two elements once
+
+```java
+int first = -1, second = -1;
+for (int i = 1; i < arr.length; i++) {
+  if (arr[i] < arr[i - 1]) {
+    if (first == -1) { // first disorder, take former one
+      first = i - 1;
+      second = i;
+    } else { // second disorder, take later one
+      second = i;
+    }
+  }
+}
+swap(first, second);
+```
+
+
+
 ##### Integer to English Words
 
 - 出处
@@ -62,6 +81,196 @@
               s += num3[n - 10] + " ";
           }
           return s;
+      }
+  }
+  ```
+
+### Binary Search
+
+##### Max Sum of Rectangle No Larger Than K
+
+- 出处
+
+  https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/
+
+  输入一个int二维数组代表矩形 和一个k 找到小于k的最大矩形面积
+
+- Solution
+
+  用TreeSet 因为可以帮我在logn的复杂度下找到大于xxx的最小值
+
+  set init后要添加0
+
+- Complexity
+
+  - Time: O(n * n  *m  * log m)
+  - Space O(m)
+
+- Code
+
+  ```java
+  class Solution {
+      public int maxSumSubmatrix(int[][] matrix, int k) {
+          int res = Integer.MIN_VALUE;
+          
+          if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+              return res;
+          }
+          
+          int r = matrix.length;
+          int c = matrix[0].length;
+          for (int i = 0; i < c; i++) {
+              int[] row = new int[r];
+              for (int j = i; j < c; j++) {
+                  for (int h = 0; h < r; h++) {
+                      row[h] += matrix[h][j];
+                  }
+                  
+                  int accu = 0;
+                  TreeSet<Integer> set = new TreeSet<>();
+                  set.add(0);
+                  for (int h = 0; h < r; h++) {
+                      accu += row[h];
+                      Integer minus = set.ceiling(accu - k);
+                      if (minus != null) {
+                          res = Math.max(res, accu - minus);    
+                      }
+                      set.add(accu);
+                  }
+              }
+          }
+          
+          return res;
+      }
+  }
+  ```
+
+  
+
+### 链表
+
+##### Remove Linked List Elements
+
+- 出处
+
+  https://leetcode.com/problems/remove-linked-list-elements/
+
+- Solution
+
+  注意 （1）判断等 用while 因为可能有连续的等 （2）init dmmy.next
+
+- Code
+
+  ```java
+  class Solution {
+      public ListNode removeElements(ListNode head, int val) {
+          ListNode dmmy = new ListNode(-1);
+          ListNode prev = dmmy;
+          prev.next = head; // 注意
+          
+          while (head != null) {
+              while (head != null && head.val == val) { // 注意
+                  prev.next = head.next;
+                  head = head.next;
+              }
+              if (head != null) {
+                  prev = head;
+                  head = head.next;                
+              }
+          }
+          
+          return dmmy.next;
+      }
+  }
+  ```
+
+### HashMap
+
+##### Degree of an Array
+
+- 出处
+
+  https://leetcode.com/problems/degree-of-an-array/
+
+- Solution
+
+  非常有意思的一道题，不是说题多难 而是正确答案多么精妙,  利用三个HashMap一次循环得到每个值出现的频率 每个值第一次出现的index 和最后一次出现的index
+
+- Complexity
+
+  TIme: O(n)
+
+  Space: O(n)
+
+- Code
+
+  ```java
+  class Solution {
+      public int findShortestSubArray(int[] nums) {
+          Map<Integer, Integer> left = new HashMap<>(), right = new HashMap<>(), count = new HashMap<>();
+          
+          for (int i = 0; i < nums.length; i++) {
+              int x = nums[i];
+              if (!left.containsKey(x)) {
+                  left.put(x, i);
+              }
+              right.put(x, i);
+              count.put(x, count.getOrDefault(x, 0) + 1);
+          }
+          
+          int res = Integer.MAX_VALUE;
+          int max = Collections.max(count.values());
+          for (int x: count.keySet()) {
+              if (count.get(x) == max) {
+                  res = Math.min(res, right.get(x) - left.get(x) + 1);
+              }
+          }
+          return res;
+      }
+  }
+  ```
+
+### Stack
+
+##### 132 Pattern
+
+* 出处
+
+  https://leetcode.com/problems/132-pattern/
+
+* Solution
+
+  有点像单调栈 132 pattern 可以分解为要找 1 < 3 && 3 > 2 && 1 < 2
+
+  其中『3』我们iterate 『1』用mins数组 『2』用stack。非常巧妙。
+
+* Complexity
+
+  TIme: O(n)
+
+  Space: O(n)
+
+* Code
+
+  ```java
+  class Solution {
+      public boolean find132pattern(int[] nums) {
+          Deque<Integer> stack = new ArrayDeque<>();
+          int[] mins = new int[nums.length];
+          for (int i = 0; i < nums.length; i++) {
+              mins[i] = i == 0 ? nums[i] : Math.min(mins[i - 1], nums[i]);
+          }
+          for (int i = nums.length - 1; i >= 0; i--) {
+              while (stack.size() > 0 && mins[i] >= stack.peek()) {
+                  stack.pop();
+              }
+              if (nums[i] > mins[i] && stack.size() > 0 && nums[i] > stack.peek()) {
+                  return true;
+              }
+              
+              stack.push(nums[i]);
+          }
+          return false;
       }
   }
   ```
@@ -295,6 +504,68 @@ class Solution {
   }
   ```
 
+#####  Snakes and Ladders
+
+- 出处
+
+  https://leetcode.com/problems/snakes-and-ladders/
+
+  输入:n x n的board  问多少步可以从1走到n*n 
+
+- Solution
+
+  1. 注意 这题坐标变换问题. 单独搞一个函数来处理
+  2. 要用一个map来记录到当前点最少步数 避免往回走的情况
+
+- Code
+
+  ```java
+  class Solution {
+      public int snakesAndLadders(int[][] board) {
+          Queue<Integer> q = new LinkedList<>();
+          Map<Integer, Integer> map = new HashMap<>();
+          int c = board[0].length;
+          q.offer(1);
+          map.put(1, 0);
+          
+          // bfs
+          while (!q.isEmpty()) {
+              int cur = q.poll();
+              if (cur == c * c) {
+                  return map.get(cur);
+              }
+              for (int j = 1; j < 7; j++) {
+                  int next = cur + j;
+                  if (next > c * c) {
+                      break;
+                  }
+                  int x = getCord(next, c)[0];
+                  int y = getCord(next, c)[1];
+                  if (board[x][y] != -1) {
+                      next = board[x][y];
+                  }
+                  if (!map.containsKey(next)) {
+                      map.put(next, map.get(cur) + 1);
+                      q.offer(next);
+                  }
+              }
+          } 
+          return -1;
+      }
+      
+      private int[] getCord(int next, int c) {
+          int[] res = new int[2];
+          res[0] = c - 1 - (next - 1) / c;
+          if ((next - 1) / c % 2 == 0) {
+              res[1] = (next - 1) % c;
+          } else {
+              res[1] = c - 1 - (next - 1) % c;
+          }
+          return res;
+      }
+  }
+  ```
+
   
 
 ### DFS
@@ -423,6 +694,36 @@ ___
 
 - Code
 
+##### Path Sum II
+
+- 出处
+
+  https://leetcode.com/problems/path-sum-ii/
+
+  输入是一个Tree 和一个sum 
+
+  求所有root 到leaf 和为sum的paths
+
+- Solution
+
+  recursion + backtracking
+
+  又忘了在当前层 remove path最后一个了！尤其注意当遇到一个可行方案时 别忘了也需要remove 反正就是这层你add了你就必须在return前remove了
+
+- Complexity 
+
+  Time: O(n)
+
+  Space: O(1) + call stack
+
+- Code
+
+  ```java
+  
+  ```
+
+  
+
 ### 分治法
 
 **注意：从根到叶子的啥啥的，对于叶子的判断是**
@@ -431,7 +732,58 @@ ___
 node.left == null && node.right == null
 ```
 
+##### Diameter of Binary Tree
 
+- 出处
+
+  https://leetcode.com/problems/diameter-of-binary-tree/
+
+- Solution
+
+  recursion helper函数返回当前深度，同时设置instance variable（全局） max 与每步中左深度 + 右深度比较
+
+- Complexity
+
+  Time: O(n)
+
+  Space: O(1)
+
+- Code
+
+  ```java
+  class Solution {
+      int maxLen;
+      
+      public int diameterOfBinaryTree(TreeNode root) {
+          maxLen = 0;
+          helper(root);
+          return maxLen;
+      }
+      
+      private int helper(TreeNode root) {
+          if (root == null) {
+              return 0;
+          }
+          if (root.left == null && root.right == null) {
+              return 0;
+          }
+          int left = 0, right = 0;
+          int cur = 0;
+          if (root.left != null) {
+              left = helper(root.left);
+              cur += left + 1;
+          }
+          if (root.right != null) {
+              right = helper(root.right);
+              cur += right + 1;
+          }
+          maxLen = Math.max(maxLen, cur);
+          return Math.max(left, right) + 1;
+      }
+  }
+  ```
+
+  
 
 ### 动态规划
 
@@ -468,9 +820,7 @@ f[i] can be expressed by f[i - 1] or f[i - 1] + f[i - 2] 从而我们可以分�
 * 初始化 initialization
 * 答案 answer
 
-### 高级数据结构
-
-##### PriorityQueue
+### PriorityQueue
 
 一般求最大K 最小K的时候用PriorityQueue
 
@@ -481,6 +831,80 @@ add - O（log n）
 remove - O（log n）
 
 Min or Max - O（1）
+
+##### Merge K sorted Lists
+
+* 出处
+
+  https://leetcode.com/problems/merge-k-sorted-lists/
+
+  输入一个数组 每个元素是LinkedList（ListNode）
+
+  输出一个排好序的ListNode的头
+
+* Solution
+
+  PriorityQueue 
+
+  注意：（1）PriorityQueue要重写Comparator（因为是ListNode）(2) 输入长度是0单独处理 因为声明Queue的时候要声明长度 没发声明长度为0的queue 会报错（3）for循环加入头节点时要注意if(node != null)再加
+
+* Complexity
+
+  Time：O（n * m）
+
+  Space: O(n)
+
+  n is length of Array, m is average number of each ListNode
+
+* Code
+
+  ```java
+  /**
+   * Definition for singly-linked list.
+   * public class ListNode {
+   *     int val;
+   *     ListNode next;
+   *     ListNode(int x) { val = x; }
+   * }
+   */
+  class Solution {
+      Comparator<ListNode> myComparator = new Comparator<ListNode>() { // 这
+          public int compare(ListNode l1, ListNode l2) {
+              return l1.val - l2.val;
+          }
+      };
+      
+      public ListNode mergeKLists(ListNode[] lists) {
+          if (lists.length == 0) { // 这
+              return null;
+          }
+          ListNode dmmy = new ListNode(-1);
+          ListNode prev = dmmy;
+          PriorityQueue<ListNode> pq = new PriorityQueue<>(lists.length, myComparator);
+          
+          for (int i = 0; i < lists.length; i++) {
+              if (lists[i] != null) { //这
+                  pq.add(lists[i]);    
+              }
+          }
+          
+          while (pq.size() > 0) {
+              ListNode node = pq.poll();
+              if (node.next != null) {
+                  pq.add(node.next);
+              }
+              prev.next = node;
+              prev = node;
+          }
+          
+          return dmmy.next;
+      }
+  }
+  ```
+
+  
+
+
 
 ##### Find Median from Data Stream
 
